@@ -51,10 +51,12 @@ if __name__=='__main__':
             config={
                 'epochs': args.epochs,
                 'experiments_path': args.experiments_path,
+                'cycles': args.cycles,
                 'model_name': args.model_name,
                 'num_workers': args.num_workers,
                 'random_state': args.random_state,
                 'wandb': args.wandb,
+                'wandb_project': args.wandb_project,
             }
         )
         
@@ -100,7 +102,7 @@ if __name__=='__main__':
     val_loader = torch.utils.data.DataLoader(val_dataset, batch_size=32, num_workers=args.num_workers)
     
     #lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=30, gamma=0.1)
-    T, M = args.epochs, 5
+    T, M = args.epochs, args.cycles
     #lr_scheduler = CyclicLR(optimizer, 0.01, T, M)
     lr_scheduler = CyclicLR(optimizer, 0.01, T*len(augmented_train_loader), M)
     
